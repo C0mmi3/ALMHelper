@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{dd:MM:yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <File name="HelperLog" fileName="D:/Gette/ALM/logs/helper.log">
+            <PatternLayout pattern="%d{dd.MM.yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="WatchdogLog" fileName="D:/Gette/ALM/logs/watchdog.log">
+            <PatternLayout pattern="%d{dd.MM.yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="Defects" fileName="D:/Gette/ALM/logs/defects.log">
+            <PatternLayout pattern="%d{dd.MM.yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.main.helpers.ALMHelper" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="HelperLog"/>
+        </Logger>
+        <Logger name="com.test.TestHelper" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="HelperLog"/>
+        </Logger>
+        <Logger name="com.test.PromHelper" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="HelperLog"/>
+        </Logger>
+        <Logger name="com.main.Processor" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="HelperLog"/>
+        </Logger>
+        <Logger name="com.main.watchdog.Observer" level="info" additivity="false">
+            <AppenderRef ref="WatchdogLog"/>
+        </Logger>
+        <Logger name="Defects" level="error" additivity="false">
+            <AppenderRef ref="Defects"/>
+        </Logger>
+
+        <!-- Root Logger -->
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="HelperLog"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
