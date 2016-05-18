@@ -18,8 +18,8 @@
 ----------------------------------------------------------------------------
 1. Authenticate method.
 Uses next arguments of config.properties:
-*alm.server.api.user = Username in ALM
-*alm.server.api.password = Password in ALM
+- alm.server.api.user = Username in ALM
+- alm.server.api.password = Password in ALM
 As a result we're receiving cookies and user's session info.
 
 2. getDefect method.
@@ -29,9 +29,9 @@ As a result we're receving JSON with a full information about bug
 3. prepareDefect method.
 Input parameter - JSON returned by getDefect method.
 Output parameter - JSON with only neccessary attributes which need to be changed
- ** OWNER
- ** STATUS
- ** DEV-COMMENTS
+- OWNER
+- STATUS
+- DEV-COMMENTS
 
 4. updateDefect method.
 Updating the information about a bug in ALM.
@@ -39,11 +39,11 @@ Input parameter - JSON returned by prepareDefect method.
 
 5. getList method.
 config.properties contains attribute which points to where exists the file with a list of bugs which we should proceed:
-*alm.defects.list.file.path
+- alm.defects.list.file.path
 
 6. archiveList method.
 config.properties contains attribute which points to where should we store the history:
-*alm.helper.history.directory
+- alm.helper.history.directory
 
 7. signOut method.
 Added 1.1.1, 12.04.2016
