@@ -1,4 +1,4 @@
-package com.test;
+package com.main.helpers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -27,10 +27,10 @@ public abstract class HelperBase {
     }
 
     /*
-Инициализация конфига
-Считываем все настройки из конфигурационного файла.
-Вызывается в конструкторе ALMHelper'а.
-Надо бы потом вынести конфиг, чтобы он был глобальным.
+Config init
+Reading properties from config file
+Called from HelperBase constructor
+I should move config from here to make it global
 */
     public void setConfig() {
 
@@ -50,11 +50,11 @@ public abstract class HelperBase {
         log.info("Build date: " + config.getProperty("alm.helper.build.date"));
     }
  /*
-    Метод для аутентификации
-    В текущей реализации данные для аутентификации берутся из конфигурационного файла.
-    Данные задаются в следующем виде: login:password
-    В дальнейшем они преобразуются в BASE64 и отправляются на сервер.
-    Полученные в ответе cookies сохраняем, чтобы передавать при дальнейших запросах.
+    Authentication method
+    Currently authData's loading from config
+    authData template: login:password
+    Encoding to BASE64 and sending to a server
+    Saving received cookies and using in further work
      */
 
     public void Authenticate() {
@@ -77,10 +77,9 @@ public abstract class HelperBase {
                 conn.disconnect();
                 boolean k = false;
                 /*
-                Сейчас в куки пихается слишком много пустых Path=. Надо будет сделать какую-нибудь чистку
-                Дело в том, что ALM возвращает несколько Header'ов Set-Cookie, и в каждом из них есть такой параметр.
-                На работоспособности не сказывается, но забивает куки лишним мусором
-                                 */
+                There are a lot of empty Path= arguments in cookies currently.
+                 I should find a way to erase them
+                                                 */
                 for (int i = 0; i < map.size(); i++) {
                     if (map.containsKey("Set-Cookie")) {
                         if (!k) {
@@ -103,7 +102,7 @@ public abstract class HelperBase {
     }
 
     /*
-      Метод для закрытия пользовательской сессии в ALM. В противном случае сессия будет висеть несколько часов.
+      Sign out method. Otherwise session will be alive next few hours
        */
     public void signOut() {
         try {
@@ -126,14 +125,14 @@ public abstract class HelperBase {
     }
 
      /*
-    Метод для получения информации о дефекте
-    В текущей реализации преобразует тело ответа (Response) в строку и возвращает.
-    В дальнейшем парсится в JSON-объект с помощью GSON.
-    Нас интересуют поля:
-    id - ID дефекта
-    owner - Пользователь, на которого возвращаем дефект
-    status - Статус дефекта
-    dev-comments - Комментарий к дефекту
+    Method for receiving bug information
+    Currently returning Response body and translating to String
+    Then parsing to JSON using GSON
+    Important fields:
+    id
+    owner
+    status
+    dev-comments
  */
 
     public JsonObject getDefect(String project, int id) {
@@ -163,7 +162,7 @@ public abstract class HelperBase {
     }
 
     /*
-Вспомогательный метод для получения тела Response-сообщения.
+Helper for translating Response from Stream
  */
     public byte getByteArray(InputStream is)[]throws IOException {
         int nRead;
@@ -181,8 +180,8 @@ public abstract class HelperBase {
     }
 
     /*
- Метод для обновления информации по дефекту в ALM.
- На вход подается JSON-объект, из которого мы берем лишь нужные нам поля и отправляем PUT HTTP-запрос.
+    Update method
+    Sending JSON with required for update fields
   */
     public void updateDefect(String project, JsonObject obj) throws IOException {
         log.debug(obj);
@@ -211,7 +210,7 @@ public abstract class HelperBase {
     }
 
     /*
-    Метод для получения тела ответа.
+    Response body translating method
      */
     public String getResponseMessage(HttpURLConnection conn) {
         byte bout[] = new byte[0];
@@ -227,18 +226,18 @@ public abstract class HelperBase {
     }
 
     /*
-    Метод для создания нового дефекта
+    New bug creating method
      */
     public void createDefect(String project, JsonObject obj) {
 
     }
 
     /*
-    Метод для обработки ошибок
+    Error processor
      */
     public void processError(HttpURLConnection conn) throws IOException {
         int errorCode;
-        //Получаем тело сообщения об ошибке в качестве JSON-объекта
+        //Receiving error body for processing
         if ((errorCode = conn.getResponseCode()) == 503) {
 
         }

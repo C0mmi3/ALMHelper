@@ -21,11 +21,11 @@
             <AppenderRef ref="Console"/>
             <AppenderRef ref="HelperLog"/>
         </Logger>
-        <Logger name="com.test.TestHelper" level="info" additivity="false">
+        <Logger name="com.main.helpers.TestHelper" level="info" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="HelperLog"/>
         </Logger>
-        <Logger name="com.test.PromHelper" level="info" additivity="false">
+        <Logger name="com.main.helpers.PromHelper" level="info" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="HelperLog"/>
         </Logger>

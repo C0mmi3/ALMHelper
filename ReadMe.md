@@ -16,46 +16,42 @@
 
 #### Функционал ####
 ----------------------------------------------------------------------------
-1. Авторизация в системе ALM. Метод POSTAuthenticate класса HTTPRequest.
-Для авторизации используются следующие параметры из файла config.properties:
-alm.server.api.user = Имя пользователя в системе ALM
-alm.server.api.password = Пароль пользователя в системе ALM
-В результате выполнения данного метода заполняется параметр cookies с данными о пользователе и его сессии
+1. Authenticate method.
+Uses next arguments of config.properties:
+*alm.server.api.user = Username in ALM
+*alm.server.api.password = Password in ALM
+As a result we're receiving cookies and user's session info.
 
-2. Получение дефекта из ALM. Метод GETDefect класса HTTPRequest.
-Входной параметр метода - ID дефекта.
-На выходе мы получаем JSON-объект, в котором содержатся все данные по дефекту.
+2. getDefect method.
+Input parameter - bug ID.
+As a result we're receving JSON with a full information about bug
 
-3. Подготовка дефекта к обновлению. Метод prepareDefect.
-Входной параметр метода - JSON-объект, полученный методом GETDefect.
-На выходе мы получаем уменьшенный JSON-объект, в котором содержатся следующие поля:
-* OWNER - пользователь ALM, на которого будет переведен дефект. В параметре alm.exclude.users в config.properties передается список пользователей через разделитель ",", на которых нельзя переводить дефекты.
-В таком случае дефекты будут переведены на пользователя, указанного в параметре alm.default.user
-* STATUS - обновленный статус дефекта. Сейчас все дефекты автоматически переводятся в статус "Fixed"
-* DEV-COMMENTS - комментарий, отображающийся в ALM. Формируется следующим образом:
-Берется значение поля DEV-COMMENTS из полученного методом GETDefect объекта. К нему прибавляется текущая дата и параметры из config.properties:
-alm.defect.comment = Комментарий в кодировке UNICODE, который добавляется к дефекту. Поддерживает спецпараметр %DATE%, проставляющий текущую дату в формате dd.mm.yyyy
-alm.server.api.credentials = ФИО пользователя ALM, от которого осуществляется вход в систему.
+3. prepareDefect method.
+Input parameter - JSON returned by getDefect method.
+Output parameter - JSON with only neccessary attributes which need to be changed
+* OWNER
+* STATUS
+* DEV-COMMENTS
 
-4. Обновление дефекта. Метод PUTUpdateDefect.
-Входной параметр метода  - JSON-объект, полученный методом prepareDefect.
-Основная логика находится в методе main класса Processor.
+4. updateDefect method.
+Updating the information about a bug in ALM.
+Input parameter - JSON returned by prepareDefect method.
 
-5. Получение списка дефектов. Метод getList.
-Расположение файла со списком дефектов задается в config.properties:
-alm.defects.list.file.path
+5. getList method.
+config.properties contains attribute which points to where exists the file with a list of bugs which we should proceed:
+*alm.defects.list.file.path
 
-6. Архивирование списка дефектов. Метод archiveList.
-Расположение директории с историей поставок задается в config.properties:
-alm.helper.history.directory
+6. archiveList method.
+config.properties contains attribute which points to where should we store the history:
+*alm.helper.history.directory
 
-7. Завершение пользовательской сессии. Метод signOut.
-Добавлен в 1.1.1 от 12.04.2016
+7. signOut method.
+Added 1.1.1, 12.04.2016
 
-8. Режим наблюдателя. Модуль мониторит указанную директорию на предмет появления/изменения файла со списком дефектов. Если файл появился/изменился, начинает обработку.
-Добавлен в 1.2 от 14.04.2016
+8. Observer mode.
+Added 1.2, 14.04.2016
 
-#### ЗАПУСК ####
+#### LAUNCH ####
 ----------------------------------------------------------------------------
 В командной строке выполнить следующую команду: java -jar /path-to-jar/ALMHelper.jar MODE
 Где MODE: RUN_ONCE,WATCH

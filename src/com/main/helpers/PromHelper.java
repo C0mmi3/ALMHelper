@@ -1,4 +1,4 @@
-package com.test;
+package com.main.helpers;
 
 import com.google.gson.JsonObject;
 

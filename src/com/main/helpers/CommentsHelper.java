@@ -1,4 +1,4 @@
-package com.main.comments;
+package com.main.helpers;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,11 +7,11 @@ import java.util.Calendar;
  * Created by ikfl27 on 20.04.2016.
  */
 /*
-Содержит методы по формированию комментария.
+Creating HTML-template for dev-comments
  */
 public class CommentsHelper {
     /*
-    Создает новый комментарий
+    Creating new comment if dev-comments is empty
      */
     public static String createComment(String text, String credentials, String username) {
         Calendar cal = Calendar.getInstance();
@@ -33,7 +33,7 @@ public class CommentsHelper {
     }
 
     /*
-    Добавляет комментарий к уже существующим
+    Adding to existing comment
      */
     public static String addComment(String source, String text, String credentials, String username) {
         Calendar cal = Calendar.getInstance();

@@ -1,7 +1,6 @@
 package com.main.watchdog;
 
-import com.main.helpers.ALMHelper;
-import com.test.HelperBase;
+import com.main.helpers.HelperBase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,9 +20,9 @@ public class Observer {
     2) Убрать взаимные вызовы методов разных классов
     3) Упростить логику работы
      */
-    public Observer(ALMHelper helper) throws IOException {
+    public Observer(HelperBase helper) throws IOException {
         WatchService watcher = FileSystems.getDefault().newWatchService();
-        Path path = Paths.get(helper.getConfig().getProperty("alm.defects.list.file.path"));
+        Path path = Paths.get(helper.config.getProperty("alm.defects.list.file.path"));
         path.register(watcher, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY);
         while (true) {
             WatchKey key;
@@ -44,7 +43,7 @@ public class Observer {
                 if (fileName.toString().equals("list.txt")) {
                     if (kind.name() == "ENTRY_CREATE" || kind.name() == "ENTRY_MODIFY") {
                         log.info(kind.name() + ": " + fileName + " .Starting processing!");
-                        ALMHelper.process(helper);
+                        helper.process();
                         log.info("We are still watching you!");
                     }
                 }

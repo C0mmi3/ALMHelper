@@ -1,9 +1,9 @@
 package com.main;
 
 
-import com.test.HelperBase;
-import com.test.TestHelper;
-import com.test.watchdog.Observer;
+import com.main.helpers.HelperBase;
+import com.main.helpers.TestHelper;
+import com.main.watchdog.Observer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

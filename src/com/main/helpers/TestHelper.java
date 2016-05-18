@@ -1,7 +1,6 @@
-package com.test;
+package com.main.helpers;
 
 import com.google.gson.JsonObject;
-import com.main.comments.CommentsHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
