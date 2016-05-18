@@ -29,9 +29,9 @@ As a result we're receving JSON with a full information about bug
 3. prepareDefect method.
 Input parameter - JSON returned by getDefect method.
 Output parameter - JSON with only neccessary attributes which need to be changed
-* OWNER
-* STATUS
-* DEV-COMMENTS
+ ** OWNER
+ ** STATUS
+ ** DEV-COMMENTS
 
 4. updateDefect method.
 Updating the information about a bug in ALM.
